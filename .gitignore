@@ -6,3 +6,6 @@ out/
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# Office 打开文件时产生的临时锁定文件
+~$*

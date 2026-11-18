@@ -6,7 +6,7 @@ import settings from "@/data/settings.json";
 import { catalog } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
 import { fill, useLang } from "@/lib/i18n";
-import { buildOrderMessage, earliestDate, orderWhatsappUrl, type OrderForm } from "@/lib/order";
+import { buildOrderMessage, earliestDate, makeOrderId, orderWhatsappUrl, sendOrderToSheet, type OrderForm } from "@/lib/order";
 import { QtyStepper } from "./AddToCart";
 import { WhatsAppIcon } from "./Hero";
 
@@ -118,8 +118,11 @@ function CartPanel() {
       document.getElementById(`order-${Object.keys(e)[0]}`)?.focus();
       return;
     }
-    const url = orderWhatsappUrl(buildOrderMessage(lines, form));
+    const orderId = makeOrderId();
+    const url = orderWhatsappUrl(buildOrderMessage(lines, form, orderId));
+    // 先开 WhatsApp（要在按键当下打开，不然会被浏览器挡），再把订单存进 Google Sheet
     window.open(url, "_blank", "noopener,noreferrer");
+    sendOrderToSheet({ orderId, lines, form });
     setSentUrl(url);
   };
 

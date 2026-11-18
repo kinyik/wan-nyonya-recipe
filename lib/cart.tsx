@@ -24,19 +24,23 @@ const MAX_QTY = 99;
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   // 记住客人的购物篮（关掉网页再回来还在）
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(KEY) ?? "[]") as CartLine[];
-      setLines(saved.filter((l) => catalog[l.id] && l.qty > 0));
+      if (Array.isArray(saved)) setLines(saved.filter((l) => catalog[l?.id] && Number.isInteger(l.qty) && l.qty > 0));
     } catch {}
+    setLoaded(true);
   }, []);
+  // 读取完旧的购物篮之后才开始存，否则会先用空篮子把旧资料盖掉
   useEffect(() => {
+    if (!loaded) return;
     try {
       localStorage.setItem(KEY, JSON.stringify(lines));
     } catch {}
-  }, [lines]);
+  }, [lines, loaded]);
 
   const value = useMemo<Ctx>(() => {
     const count = lines.reduce((n, l) => n + l.qty, 0);

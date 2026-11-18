@@ -1,0 +1,164 @@
+{
+  "zh": {
+    "demoBanner": "示范版本：产品、价钱和联系资料都是假资料，图片为示意图。",
+    "brand": { "name": "云惹坊", "en": "Wan Nyonya Recipe" },
+    "nav": { "products": "产品", "about": "关于", "howto": "怎么订", "contact": "联系", "order": "立即订购", "menu": "菜单" },
+    "hero": {
+      "eyebrow": "手工娘惹糕 · Handmade Nyonya Kuih",
+      "title": "把娘惹的味道，\n带进你的生活",
+      "subtitle": "一层一层慢慢蒸，椰香、斑斓、蝶豆花，都是记忆里的颜色。",
+      "ctaWhatsapp": "WhatsApp 订购",
+      "ctaProducts": "看产品",
+      "whatsappGreeting": "你好云惹坊，我想订娘惹糕。"
+    },
+    "highlights": {
+      "kicker": "为什么是云惹坊",
+      "title": "一口，满满幸福",
+      "items": [
+        { "title": "多层口感", "desc": "九层分次蒸熟，每一层都能一片片撕开，软中带韧。" },
+        { "title": "椰香软糯", "desc": "新鲜椰浆和椰丝，当天现做，香而不腻。" },
+        { "title": "传统手工", "desc": "照着娘惹家传的做法，一盘一盘手工完成。" }
+      ]
+    },
+    "menu": {
+      "kicker": "产品菜单",
+      "title": "今天想吃哪一种？",
+      "subtitle": "每款都是当天现做，建议收到当天或隔天吃完。",
+      "add": "加入订单",
+      "sample": "示意图"
+    },
+    "sets": {
+      "kicker": "套餐 / 礼盒",
+      "title": "聚会、茶歇、送礼",
+      "subtitle": "人多的场合，直接选套餐最省心。",
+      "serves": "适合",
+      "cta": "询问这个套餐"
+    },
+    "story": {
+      "kicker": "品牌故事",
+      "title": "一张从外婆厨房传下来的配方",
+      "paragraphs": [
+        "云惹坊的配方来自家里的娘惹长辈。小时候过年过节，厨房里总是蒸着一盘盘颜色鲜艳的糕点。",
+        "我们坚持用新鲜椰浆、真正的斑斓叶和蝶豆花上色，不走捷径，也不加多余的东西。",
+        "希望你吃到的每一块，都有那种被照顾的感觉。"
+      ],
+      "quote": "娘惹糕不只是点心，是一家人围在一起的时光。"
+    },
+    "howto": {
+      "kicker": "怎么订",
+      "title": "四步就能吃到",
+      "steps": [
+        { "title": "选产品", "desc": "在网站选好口味和数量。" },
+        { "title": "WhatsApp 确认", "desc": "订单会自动整理好，发给我们确认。" },
+        { "title": "付款", "desc": "{payment}" },
+        { "title": "取货 / 送货", "desc": "在约好的日期取货或送到你家。" }
+      ],
+      "rulesTitle": "下单须知",
+      "rules": {
+        "lead": "请提前 {leadDays} 天下单",
+        "min": "最低消费 {currency}{minOrder}",
+        "pickup": "取货：{pickup}",
+        "delivery": "送货：{delivery}"
+      }
+    },
+    "faq": {
+      "kicker": "常见问题",
+      "title": "你可能想问",
+      "items": [
+        { "q": "娘惹糕可以放几天？", "a": "室温下当天吃完最好吃；放冰箱可以保存 2 天，吃之前蒸 3–5 分钟会恢复软糯。" },
+        { "q": "需要冷藏吗？", "a": "当天吃完不用冷藏；隔天吃请放冰箱。" },
+        { "q": "有没有清真认证？", "a": "目前没有清真认证。所有产品不含猪肉和猪油。" },
+        { "q": "可以定制口味或数量吗？", "a": "可以，宴会、公司活动或特别口味请 WhatsApp 我们，至少提前 5 天预订。" },
+        { "q": "有哪些过敏原？", "a": "主要材料是椰子、糯米、木薯和蛋，对这些过敏的朋友请留意。" }
+      ]
+    },
+    "footer": {
+      "pickupLabel": "取货地点",
+      "hoursLabel": "营业时间",
+      "contactLabel": "联系我们",
+      "followLabel": "关注我们",
+      "rights": "保留所有权利。"
+    }
+  },
+  "en": {
+    "demoBanner": "Demo version: products, prices and contact details are placeholders; images are illustrative.",
+    "brand": { "name": "云惹坊", "en": "Wan Nyonya Recipe" },
+    "nav": { "products": "Menu", "about": "About", "howto": "How to Order", "contact": "Contact", "order": "Order Now", "menu": "Menu" },
+    "hero": {
+      "eyebrow": "Handmade Nyonya Kuih · 手工娘惹糕",
+      "title": "Bringing the Nyonya Taste\nto Your Life",
+      "subtitle": "Steamed layer by layer — coconut, pandan and butterfly pea, the colours of home.",
+      "ctaWhatsapp": "Order on WhatsApp",
+      "ctaProducts": "See the Menu",
+      "whatsappGreeting": "Hi Wan Nyonya Recipe, I'd like to order some kuih."
+    },
+    "highlights": {
+      "kicker": "Why Wan Nyonya",
+      "title": "One bite, pure happiness",
+      "items": [
+        { "title": "Layer upon layer", "desc": "Each layer is steamed separately, so you can peel them apart one by one." },
+        { "title": "Soft & coconutty", "desc": "Fresh coconut milk and grated coconut, made on the day." },
+        { "title": "Made by hand", "desc": "Following a family Nyonya recipe, one tray at a time." }
+      ]
+    },
+    "menu": {
+      "kicker": "Our Menu",
+      "title": "Which one today?",
+      "subtitle": "Everything is made fresh on the day — best enjoyed within a day.",
+      "add": "Add to order",
+      "sample": "Illustrative"
+    },
+    "sets": {
+      "kicker": "Sets & Gift Boxes",
+      "title": "Gatherings, tea breaks & gifts",
+      "subtitle": "Feeding a crowd? A set is the easiest choice.",
+      "serves": "Serves",
+      "cta": "Ask about this set"
+    },
+    "story": {
+      "kicker": "Our Story",
+      "title": "A recipe from grandma's kitchen",
+      "paragraphs": [
+        "Our recipes come from the Nyonya elders in our family. Every festive season, the kitchen was filled with trays of colourful kuih.",
+        "We use fresh coconut milk and real pandan and butterfly pea for colour — no shortcuts, nothing extra.",
+        "We hope every piece feels like being looked after."
+      ],
+      "quote": "Nyonya kuih isn't just a snack — it's time spent together as a family."
+    },
+    "howto": {
+      "kicker": "How to Order",
+      "title": "Four simple steps",
+      "steps": [
+        { "title": "Pick your kuih", "desc": "Choose flavours and quantities on this site." },
+        { "title": "Confirm on WhatsApp", "desc": "Your order is sent to us, neatly formatted." },
+        { "title": "Pay", "desc": "{payment}" },
+        { "title": "Pick up / Delivery", "desc": "Collect or receive it on your chosen date." }
+      ],
+      "rulesTitle": "Good to know",
+      "rules": {
+        "lead": "Order at least {leadDays} days ahead",
+        "min": "Minimum order {currency}{minOrder}",
+        "pickup": "Pick-up: {pickup}",
+        "delivery": "Delivery: {delivery}"
+      }
+    },
+    "faq": {
+      "kicker": "FAQ",
+      "title": "You might be wondering",
+      "items": [
+        { "q": "How long does the kuih keep?", "a": "Best on the day at room temperature; up to 2 days in the fridge — steam for 3–5 minutes to soften again." },
+        { "q": "Does it need refrigeration?", "a": "Not if eaten the same day; otherwise keep it in the fridge." },
+        { "q": "Is it halal?", "a": "We are not halal certified. All products are free from pork and lard." },
+        { "q": "Can I customise flavours or quantity?", "a": "Yes — for events, corporate orders or special flavours, WhatsApp us at least 5 days ahead." },
+        { "q": "What are the allergens?", "a": "Main ingredients are coconut, glutinous rice, tapioca and egg." }
+      ]
+    },
+    "footer": {
+      "pickupLabel": "Pick-up",
+      "hoursLabel": "Opening Hours",
+      "contactLabel": "Contact",
+      "followLabel": "Follow Us",
+      "rights": "All rights reserved."
+    }
+  }
+}

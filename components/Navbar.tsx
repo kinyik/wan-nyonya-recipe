@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useCart } from "@/lib/cart";
+import { BasketIcon } from "./Cart";
 import { useLang } from "@/lib/i18n";
 
 export default function Navbar() {
   const { t, lang, setLang } = useLang();
+  const cart = useCart();
   const [open, setOpen] = useState(false);
 
   const links = [
@@ -56,8 +59,27 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2 md:gap-3">
           <div className="hidden sm:block">{LangToggle}</div>
+          <button
+            type="button"
+            onClick={cart.open}
+            className="relative p-2 text-cocoa hover:text-nyonya"
+            aria-label={`${t.cart.badge} (${cart.count})`}
+          >
+            <BasketIcon className="h-6 w-6" />
+            {cart.count > 0 && (
+              <span className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-full bg-nyonya px-1 text-[11px] font-bold text-white">
+                {cart.count}
+              </span>
+            )}
+          </button>
           <a
             href="#products"
+            onClick={(e) => {
+              if (cart.count > 0) {
+                e.preventDefault();
+                cart.open();
+              }
+            }}
             className="rounded-full bg-nyonya px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-nyonya-deep"
           >
             {t.nav.order}

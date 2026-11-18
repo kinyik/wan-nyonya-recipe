@@ -4,6 +4,7 @@ import data from "@/data/products.json";
 import settings from "@/data/settings.json";
 import { useLang, whatsappLink } from "@/lib/i18n";
 import { KuihImage, SectionHeading } from "./ui";
+import AddToCart from "./AddToCart";
 
 export default function GiftSets() {
   const { t, lang } = useLang();
@@ -34,15 +35,16 @@ export default function GiftSets() {
                     {settings.currency}
                     {s.price}
                   </span>
-                  <a
-                    href={whatsappLink(`${t.hero.whatsappGreeting} ${s.name[lang]}`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full bg-gold px-4 py-2 text-sm font-medium text-cocoa transition-colors hover:bg-gold-soft"
-                  >
-                    {t.sets.cta}
-                  </a>
+                  <AddToCart id={s.id} label={t.sets.add} dark />
                 </div>
+                <a
+                  href={whatsappLink(`${t.hero.whatsappGreeting} ${s.name[lang]}`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 self-end text-xs text-sand/80 underline underline-offset-4 hover:text-gold-soft"
+                >
+                  {t.sets.cta}
+                </a>
               </div>
             </article>
           ))}

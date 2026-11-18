@@ -4,6 +4,7 @@ import data from "@/data/products.json";
 import settings from "@/data/settings.json";
 import { useLang } from "@/lib/i18n";
 import { KuihImage, SectionHeading } from "./ui";
+import AddToCart from "./AddToCart";
 
 export default function ProductMenu() {
   const { t, lang } = useLang();
@@ -40,12 +41,9 @@ export default function ProductMenu() {
                   </span>
                   <span className="text-xs text-bark sm:text-sm">{p.unit[lang]}</span>
                 </div>
-                <button
-                  type="button"
-                  className="mt-4 w-full rounded-full border border-cocoa py-2 text-sm font-medium text-cocoa transition-colors hover:bg-cocoa hover:text-paper"
-                >
-                  {t.menu.add}
-                </button>
+                <div className="mt-4">
+                  <AddToCart id={p.id} label={t.menu.add} />
+                </div>
               </div>
             </li>
           ))}

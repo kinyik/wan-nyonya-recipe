@@ -53,6 +53,63 @@ body {
   border-bottom: 2px solid var(--color-gold);
 }
 
+/* ===== 首屏动效 ===== */
+
+/* 照片缓慢推近再退回，约 20 秒一趟，像在呼吸。
+   起点就放大 12%，鼠标视差偏移和倾斜时边缘不会露出来（连超宽屏也够） */
+@keyframes hero-breathe {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1.18); }
+}
+.hero-breathe {
+  transform-origin: 50% 52%;
+  animation: hero-breathe 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* 一道淡淡的暖光，每 11 秒从左到右扫过一次 */
+@keyframes hero-sheen {
+  0%   { transform: translateX(-60%) skewX(-18deg); opacity: 0; }
+  10%  { opacity: 1; }
+  45%  { opacity: 1; }
+  55%  { transform: translateX(320%) skewX(-18deg); opacity: 0; }
+  100% { transform: translateX(320%) skewX(-18deg); opacity: 0; }
+}
+.hero-sheen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-sheen::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -10%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 232, 190, 0.16), rgba(255, 245, 225, 0.24), rgba(255, 232, 190, 0.16), transparent);
+  mix-blend-mode: screen;
+  animation: hero-sheen 11s ease-in-out 1.5s infinite;
+  opacity: 0;
+}
+
+/* 标题、按钮逐行淡入上浮；延迟由 --d 控制 */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-rise {
+  opacity: 0;
+  animation: hero-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-breathe,
+  .hero-sheen::before { animation: none; }
+  .hero-rise { animation: none; opacity: 1; }
+}
+
 /* 深色区块里的淡花砖底纹 */
 .tile-bg {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c49a4a' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M32 6 C40 16 40 26 32 32 C24 26 24 16 32 6Z'/%3E%3Cpath d='M32 58 C40 48 40 38 32 32 C24 38 24 48 32 58Z'/%3E%3Cpath d='M6 32 C16 24 26 24 32 32 C26 40 16 40 6 32Z'/%3E%3Cpath d='M58 32 C48 24 38 24 32 32 C38 40 48 40 58 32Z'/%3E%3Ccircle cx='32' cy='32' r='3'/%3E%3C/g%3E%3C/svg%3E");

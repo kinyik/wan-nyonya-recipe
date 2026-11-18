@@ -1,22 +1,108 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
 import { useLang, whatsappLink } from "@/lib/i18n";
+
+const HERO_IMAGE = "/images/hero/hero-photo.jpg";
+/** 鼠标视差：照片最多偏移几像素（越大越明显） */
+const PARALLAX_PX = 30;
+/** 跟着鼠标轻微倾斜的角度（度），让偏移带一点弧度、像镜头在绕着竹篮转 */
+const PARALLAX_TILT = 2.2;
+/** 视差跟随的柔和度：数字越小，跟得越慢越柔 */
+const PARALLAX_EASE = 2.5;
+
+/**
+ * 鼠标在首屏移动时，照片轻轻往反方向偏移，像有景深。
+ * 只在用鼠标的电脑上生效；设了“减少动态效果”就不动。
+ */
+function useParallax(areaRef: RefObject<HTMLElement | null>, layerRef: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const area = areaRef.current;
+    const layer = layerRef.current;
+    if (!area || !layer) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let x = 0, y = 0, tx = 0, ty = 0, raf = 0, last = 0;
+
+    const tick = (now: number) => {
+      const dt = last ? Math.min((now - last) / 1000, 0.5) : 0;
+      last = now;
+      const k = 1 - Math.exp(-dt * PARALLAX_EASE);
+      x += (tx - x) * k;
+      y += (ty - y) * k;
+      // x、y 是 -1 到 1 的比例：平移 + 轻微 3D 倾斜，形成弧形的移动感
+      const px = x * PARALLAX_PX;
+      const py = y * PARALLAX_PX * 0.6;
+      const ry = -x * PARALLAX_TILT;
+      const rx = y * PARALLAX_TILT * 0.6;
+      layer.style.transform = `perspective(1400px) translate3d(${px.toFixed(2)}px, ${py.toFixed(2)}px, 0) rotateX(${rx.toFixed(3)}deg) rotateY(${ry.toFixed(3)}deg)`;
+      if (Math.abs(tx - x) < 0.002 && Math.abs(ty - y) < 0.002) {
+        raf = 0;
+        last = 0;
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    const run = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const r = area.getBoundingClientRect();
+      tx = -((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = -((e.clientY - r.top) / r.height - 0.5) * 2;
+      run();
+    };
+    const onLeave = () => {
+      tx = 0;
+      ty = 0;
+      run();
+    };
+
+    area.addEventListener("pointermove", onMove);
+    area.addEventListener("pointerleave", onLeave);
+    return () => {
+      area.removeEventListener("pointermove", onMove);
+      area.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, [areaRef, layerRef]);
+}
+
+/** 文字逐行淡入：d = 第几秒开始 */
+const rise = (d: number) => ({ "--d": `${d}s` }) as CSSProperties;
 
 export default function Hero() {
   const { t } = useLang();
   const [line1, line2] = t.hero.title.split("\n");
+  const sectionRef = useRef<HTMLElement>(null);
+  const layerRef = useRef<HTMLDivElement>(null);
+  useParallax(sectionRef, layerRef);
 
   return (
-    <section id="top" className="relative isolate overflow-hidden bg-cocoa">
-      <Image
-        src="/images/storyboard/7-ending.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="-z-10 object-cover object-[30%_50%]"
-      />
+    <section ref={sectionRef} id="top" className="relative isolate overflow-hidden bg-cocoa">
+      {/* 照片：外层负责鼠标视差，内层负责缓慢推近（“呼吸”） */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div ref={layerRef} className="absolute inset-0 will-change-transform">
+          <div className="hero-breathe absolute inset-0">
+            <Image
+              src={HERO_IMAGE}
+              alt=""
+              fill
+              priority
+              quality={90}
+              sizes="110vw"
+              className="object-cover object-[45%_55%]"
+            />
+          </div>
+        </div>
+        {/* 一道淡淡的暖光，隔一阵子扫过糕点 */}
+        <div className="hero-sheen" aria-hidden="true" />
+        {/* 暗角：四周微微压暗，视线集中在竹篮 */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_45%_55%,transparent_40%,rgba(58,36,24,0.55)_100%)]" />
+      </div>
       {/* 手机：下方渐暗；电脑：右侧渐暗，文字放右边 */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-cocoa via-cocoa/60 to-cocoa/10 md:bg-gradient-to-l md:from-cocoa/95 md:via-cocoa/55 md:to-transparent" />
 
@@ -27,16 +113,24 @@ export default function Hero() {
             alt=""
             width={800}
             height={713}
-            className="mb-5 h-24 w-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.35)] md:mb-6 md:ml-auto md:h-32"
+            style={rise(0.2)}
+            className="hero-rise mb-5 h-24 w-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.35)] md:mb-6 md:ml-auto md:h-32"
           />
-          <p className="kicker text-lg text-gold-soft">{t.hero.eyebrow}</p>
+          <p style={rise(0.45)} className="hero-rise kicker text-lg text-gold-soft">
+            {t.hero.eyebrow}
+          </p>
           <h1 className="mt-3 font-serif text-4xl font-bold leading-[1.2] md:text-5xl">
-            {line1}
-            <br />
-            <span className="text-gold-soft">{line2}</span>
+            <span style={rise(0.65)} className="hero-rise block">
+              {line1}
+            </span>
+            <span style={rise(0.85)} className="hero-rise block text-gold-soft">
+              {line2}
+            </span>
           </h1>
-          <p className="mt-5 text-base leading-relaxed text-sand">{t.hero.subtitle}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row md:justify-end">
+          <p style={rise(1.1)} className="hero-rise mt-5 text-base leading-relaxed text-sand">
+            {t.hero.subtitle}
+          </p>
+          <div style={rise(1.3)} className="hero-rise mt-8 flex flex-col gap-3 sm:flex-row md:justify-end">
             <a
               href={whatsappLink(t.hero.whatsappGreeting)}
               target="_blank"

@@ -8,8 +8,10 @@ import { ORDER_ID_RE, itemsSummary, orderTotal, type OrderForm, type OrderPayloa
  * Apps Script 网址和密码放在环境变量里（.env.local / Vercel），不会出现在浏览器。
  */
 export async function POST(request: Request) {
-  const url = process.env.ORDER_SHEET_URL;
-  const secret = process.env.ORDER_SHEET_SECRET;
+  // 去掉贴上时多出来的空格、换行或引号
+  const clean = (v?: string) => v?.trim().replace(/^["']|["']$/g, "").trim();
+  const url = clean(process.env.ORDER_SHEET_URL);
+  const secret = clean(process.env.ORDER_SHEET_SECRET);
   if (!url || !secret) {
     return Response.json({ ok: false, error: "Google Sheet 还没设定（缺 ORDER_SHEET_URL 或 ORDER_SHEET_SECRET）" }, { status: 503 });
   }
@@ -45,7 +47,18 @@ export async function POST(request: Request) {
       redirect: "follow",
       signal: AbortSignal.timeout(15000),
     });
-    const result = (await res.json()) as { ok: boolean; error?: string };
+    const text = await res.text();
+    let result: { ok: boolean; error?: string };
+    try {
+      result = JSON.parse(text);
+    } catch {
+      // 回来的是网页不是 JSON：通常是网址填错（不是 /exec 结尾、或部署没设「Anyone」）
+      const title = text.match(/<title>([^<]*)<\/title>/i)?.[1]?.trim();
+      const hint = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)
+        ? "网址格式正确，请检查 Apps Script 部署的 Who has access 是否为 Anyone"
+        : "ORDER_SHEET_URL 格式不对，应该是 https://script.google.com/macros/s/…/exec";
+      result = { ok: false, error: `Google 回了网页而不是订单结果（HTTP ${res.status}${title ? `「${title}」` : ""}）。${hint}` };
+    }
     return Response.json(result, { status: result.ok ? 200 : 502 });
   } catch (err) {
     return Response.json({ ok: false, error: `连不上 Google Sheet：${String(err)}` }, { status: 502 });

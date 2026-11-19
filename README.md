@@ -2,7 +2,7 @@
 
 一个真实在运营的娘惹糕品牌官网，客人可以在线选购，用 WhatsApp 一键下单，订单同时自动记进 Google Sheet。
 
-🔗 **Live：** _（部署后填上网址）_
+🔗 **Live：** <https://wan-nyonya-recipe.vercel.app>
 
 ![首页](docs/screenshots/home.jpg)
 

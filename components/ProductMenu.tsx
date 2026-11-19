@@ -13,15 +13,19 @@ export default function ProductMenu() {
     <section id="products" className="bg-paper px-4 py-20 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading kicker={t.menu.kicker} title={t.menu.title} subtitle={t.menu.subtitle} />
-        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+        {/* 用 flex 排：最后一行不满时置中（7 款 = 桌面 4 + 3，手机 2 + 2 + 2 + 1） */}
+        <ul className="flex flex-wrap justify-center gap-3 sm:gap-5">
           {data.products.map((p) => (
-            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl bg-cream ring-1 ring-sand">
+            <li
+              key={p.id}
+              className="flex w-[calc(50%-0.375rem)] flex-col overflow-hidden rounded-2xl bg-cream ring-1 ring-sand sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)]"
+            >
               <div className="relative">
                 <KuihImage
                   src={p.image}
                   alt={p.name[lang]}
                   position={"imagePosition" in p ? p.imagePosition : undefined}
-                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  sizes="(min-width: 1024px) 25vw, 50vw"
                   className="aspect-square"
                 />
                 {settings.samplePhotos && p.image && (

@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Noto_Sans_SC, Noto_Serif_SC } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
@@ -56,7 +57,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-Hans" className={`${serif.variable} ${sans.variable} ${display.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Vercel 访客统计：在 Vercel 项目的 Analytics 分页查看 */}
+        <Analytics />
+      </body>
     </html>
   );
 }

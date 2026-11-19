@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 import settings from "@/data/settings.json";
 import { catalog, money, toCents } from "@/lib/catalog";
@@ -133,6 +134,8 @@ function CartPanel() {
     // 先开 WhatsApp（要在按键当下打开，不然会被浏览器挡），再把订单存进 Google Sheet
     window.open(url, "_blank", "noopener,noreferrer");
     sendOrderToSheet({ orderId, lines, form });
+    // 记一笔「下单」事件（Vercel 自订事件需要 Pro 方案才会显示；订单数以 Google Sheet 为准）
+    track("Order WhatsApp", { total: orderTotal(lines), items: lines.length, method: form.method });
     setSentUrl(url);
   };
 

@@ -1,5 +1,5 @@
 import settings from "@/data/settings.json";
-import { catalog } from "@/lib/catalog";
+import { catalog, toCents } from "@/lib/catalog";
 import type { CartLine } from "@/lib/cart";
 import { ORDER_ID_RE, itemsSummary, orderTotal, type OrderForm, type OrderPayload } from "@/lib/order";
 
@@ -64,7 +64,7 @@ function checkOrder(body: OrderPayload): string | null {
     if (!l || !catalog[l.id]) return "有不存在的产品";
     if (!Number.isInteger(l.qty) || l.qty < 1 || l.qty > 99) return "数量不对";
   }
-  if (orderTotal(lines) < settings.minOrder) return "未达最低消费";
+  if (toCents(orderTotal(lines)) < toCents(settings.minOrder)) return "未达最低消费";
 
   const f = form as OrderForm | undefined;
   if (!f) return "没有客人资料";

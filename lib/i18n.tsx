@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import dict from "@/data/i18n.json";
 import settings from "@/data/settings.json";
+import { money } from "./catalog";
 
 export type Lang = "zh" | "en";
 export type Dict = (typeof dict)["zh"];
@@ -50,6 +51,7 @@ export function fill(text: string, lang: Lang) {
   return text.replace(/\{(\w+)\}/g, (_, key: string) => {
     const v = (settings as Record<string, unknown>)[key];
     if (v && typeof v === "object" && lang in v) return (v as Record<Lang, string>)[lang];
+    if (typeof v === "number") return money(v);
     return v === undefined ? `{${key}}` : String(v);
   });
 }

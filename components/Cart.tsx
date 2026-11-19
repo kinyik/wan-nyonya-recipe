@@ -1,14 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import settings from "@/data/settings.json";
-import { catalog } from "@/lib/catalog";
+import { catalog, money, toCents } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
 import { fill, useLang } from "@/lib/i18n";
-import { buildOrderMessage, earliestDate, makeOrderId, orderWhatsappUrl, sendOrderToSheet, type OrderForm } from "@/lib/order";
+import {
+  buildOrderMessage,
+  earliestDate,
+  leadDaysFor,
+  makeOrderId,
+  orderTotal,
+  orderWhatsappUrl,
+  sendOrderToSheet,
+  type OrderForm,
+} from "@/lib/order";
 import { QtyStepper } from "./AddToCart";
 import { WhatsAppIcon } from "./Hero";
+import { KuihImage } from "./ui";
 
 type Errors = Partial<Record<keyof OrderForm, string>>;
 
@@ -42,7 +51,7 @@ function CartBar() {
       </span>
       <span className="text-sm font-medium">
         {t.cart.open} · {settings.currency}
-        {total}
+        {money(total)}
       </span>
     </button>
   );
@@ -74,7 +83,8 @@ function CartPanel() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const closeFn = useRef(close);
   closeFn.current = close;
-  const earliest = earliestDate();
+  const earliest = earliestDate(lines);
+  const lead = leadDaysFor(lines);
 
   // 打开时：焦点放到关闭按钮、背景不能滚动、按 Esc 关闭
   useEffect(() => {
@@ -92,7 +102,7 @@ function CartPanel() {
 
   if (!isOpen) return null;
 
-  const short = Math.max(0, settings.minOrder - total);
+  const short = Math.max(0, toCents(settings.minOrder) - toCents(total)) / 100;
   const set = <K extends keyof OrderForm>(k: K, v: OrderForm[K]) => {
     setForm((f) => ({ ...f, [k]: v }));
     if (errors[k]) setErrors((e) => ({ ...e, [k]: undefined }));
@@ -181,17 +191,15 @@ function CartPanel() {
                   const item = catalog[l.id];
                   return (
                     <li key={l.id} className="flex items-center gap-3 py-3">
-                      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl ring-1 ring-sand">
-                        <Image src={item.image} alt="" fill sizes="64px" className="object-cover" />
-                      </div>
+                      <KuihImage src={item.image} alt="" sizes="64px" className="h-16 w-16 shrink-0 rounded-xl ring-1 ring-sand" />
                       <div className="min-w-0 flex-1">
                         <p className="truncate font-serif font-bold">{item.name[lang]}</p>
                         <p className="text-sm text-clay">
                           {settings.currency}
-                          {item.price} × {l.qty} ={" "}
+                          {money(item.price)} × {l.qty} ={" "}
                           <span className="font-medium text-cocoa">
                             {settings.currency}
-                            {item.price * l.qty}
+                            {money(orderTotal([l]))}
                           </span>
                         </p>
                       </div>
@@ -257,7 +265,7 @@ function CartPanel() {
 
                 <Field label={t.cart.date} error={errors.date} htmlFor="order-date">
                   <input id="order-date" type="date" min={earliest} className={inputCls(errors.date)} value={form.date} onChange={(e) => set("date", e.target.value)} />
-                  {!errors.date && <p className="mt-1 text-xs text-clay">{fill(t.cart.dateHint, lang).replace("{earliest}", earliest)}</p>}
+                  {!errors.date && <p className="mt-1 text-xs text-clay">{fill(t.cart.dateHint.replace("{lead}", String(lead)), lang).replace("{earliest}", earliest)}</p>}
                 </Field>
 
                 <Field label={t.cart.note} htmlFor="order-note">
@@ -279,12 +287,12 @@ function CartPanel() {
                 <span className="text-bark">{t.cart.total}</span>
                 <span className="font-display text-3xl font-semibold text-nyonya-deep">
                   {settings.currency}
-                  {total}
+                  {money(total)}
                 </span>
               </div>
               {short > 0 && (
                 <p className="mt-1 text-right text-xs text-nyonya-deep">
-                  {fill(t.cart.minShort, lang).replace("{short}", `${settings.currency}${short}`)}
+                  {fill(t.cart.minShort, lang).replace("{short}", `${settings.currency}${money(short)}`)}
                 </p>
               )}
               <button

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { catalog } from "./catalog";
+import { catalog, toCents } from "./catalog";
 
 export type CartLine = { id: string; qty: number };
 
@@ -44,7 +44,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<Ctx>(() => {
     const count = lines.reduce((n, l) => n + l.qty, 0);
-    const total = lines.reduce((n, l) => n + l.qty * catalog[l.id].price, 0);
+    const total = lines.reduce((n, l) => n + l.qty * toCents(catalog[l.id].price), 0) / 100;
     return {
       lines,
       count,

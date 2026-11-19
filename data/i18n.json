@@ -23,7 +23,7 @@
     "menu": {
       "kicker": "产品菜单",
       "title": "今天想吃哪一种？",
-      "subtitle": "每款都是当天现做，建议收到当天或隔天吃完。",
+      "subtitle": "每款都是当天现做，一盒 6 片 RM9.90，最好 24 小时内吃完。",
       "add": "加入订单",
       "sample": "示意图"
     },
@@ -58,7 +58,7 @@
       "deliveryInfo": "{delivery}",
       "address": "送货地址",
       "date": "取货 / 送货日期",
-      "dateHint": "需要提前 {leadDays} 天订，最早可选 {earliest}",
+      "dateHint": "这张单需要提前 {lead} 天订（单盒 {leadDaysSingle} 天，套餐和礼盒 {leadDaysSet} 天），最早可选 {earliest}",
       "note": "备注（可不填）",
       "notePlaceholder": "例如：生日用、少甜、几点到",
       "required": "请填写这一项",
@@ -92,8 +92,8 @@
       ],
       "rulesTitle": "下单须知",
       "rules": {
-        "lead": "请提前 {leadDays} 天下单",
-        "min": "最低消费 {currency}{minOrder}",
+        "lead": "单盒提前 {leadDaysSingle} 天，套餐和礼盒提前 {leadDaysSet} 天下单",
+        "min": "单买最低消费 {currency}{minOrder}（两盒）",
         "pickup": "取货：{pickup}",
         "delivery": "送货：{delivery}"
       }
@@ -102,11 +102,11 @@
       "kicker": "常见问题",
       "title": "你可能想问",
       "items": [
-        { "q": "娘惹糕可以放几天？", "a": "室温下当天吃完最好吃；放冰箱可以保存 2 天，吃之前蒸 3–5 分钟会恢复软糯。" },
-        { "q": "需要冷藏吗？", "a": "当天吃完不用冷藏；隔天吃请放冰箱。" },
+        { "q": "娘惹糕可以放几天？", "a": "最好 24 小时内、当天吃完；吃不完放冰箱可以保存 2 天。" },
+        { "q": "需要冷藏吗？", "a": "当天吃完不用冷藏；当天吃不完请放冰箱。" },
         { "q": "有没有清真认证？", "a": "目前没有清真认证。所有产品不含猪肉和猪油。" },
-        { "q": "可以定制口味或数量吗？", "a": "可以，宴会、公司活动或特别口味请 WhatsApp 我们，至少提前 5 天预订。" },
-        { "q": "有哪些过敏原？", "a": "主要材料是椰子、糯米、木薯和蛋，对这些过敏的朋友请留意。" }
+        { "q": "可以定制口味或数量吗？", "a": "宴会、公司活动或特别要求，请 WhatsApp 我们商量。" },
+        { "q": "主要材料有哪些？", "a": "主要材料是粉、椰子、糖和糯米，对这些过敏的朋友请留意。" }
       ]
     },
     "footer": {
@@ -141,7 +141,7 @@
     "menu": {
       "kicker": "Our Menu",
       "title": "Which one today?",
-      "subtitle": "Everything is made fresh on the day — best enjoyed within a day.",
+      "subtitle": "Made fresh on the day — RM9.90 for a box of 6, best enjoyed within 24 hours.",
       "add": "Add to order",
       "sample": "Illustrative"
     },
@@ -176,7 +176,7 @@
       "deliveryInfo": "{delivery}",
       "address": "Delivery address",
       "date": "Pick-up / delivery date",
-      "dateHint": "Please order {leadDays} days ahead — earliest {earliest}",
+      "dateHint": "This order needs {lead} day(s) notice (single boxes {leadDaysSingle}, sets & gift boxes {leadDaysSet}) — earliest {earliest}",
       "note": "Notes (optional)",
       "notePlaceholder": "e.g. for a birthday, less sweet, time",
       "required": "Please fill this in",
@@ -210,8 +210,8 @@
       ],
       "rulesTitle": "Good to know",
       "rules": {
-        "lead": "Order at least {leadDays} days ahead",
-        "min": "Minimum order {currency}{minOrder}",
+        "lead": "Order {leadDaysSingle} day ahead for single boxes, {leadDaysSet} days for sets & gift boxes",
+        "min": "Minimum order {currency}{minOrder} (2 boxes)",
         "pickup": "Pick-up: {pickup}",
         "delivery": "Delivery: {delivery}"
       }
@@ -220,11 +220,11 @@
       "kicker": "FAQ",
       "title": "You might be wondering",
       "items": [
-        { "q": "How long does the kuih keep?", "a": "Best on the day at room temperature; up to 2 days in the fridge — steam for 3–5 minutes to soften again." },
+        { "q": "How long does the kuih keep?", "a": "Best eaten on the day, within 24 hours. Leftovers keep up to 2 days in the fridge." },
         { "q": "Does it need refrigeration?", "a": "Not if eaten the same day; otherwise keep it in the fridge." },
         { "q": "Is it halal?", "a": "We are not halal certified. All products are free from pork and lard." },
-        { "q": "Can I customise flavours or quantity?", "a": "Yes — for events, corporate orders or special flavours, WhatsApp us at least 5 days ahead." },
-        { "q": "What are the allergens?", "a": "Main ingredients are coconut, glutinous rice, tapioca and egg." }
+        { "q": "Can I customise flavours or quantity?", "a": "For events, corporate orders or special requests, WhatsApp us to discuss." },
+        { "q": "What are the main ingredients?", "a": "Flour, coconut, sugar and glutinous rice — please take note if you have allergies." }
       ]
     },
     "footer": {

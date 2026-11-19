@@ -1,5 +1,5 @@
 import settings from "@/data/settings.json";
-import { catalog } from "./catalog";
+import { catalog, money, toCents } from "./catalog";
 import type { CartLine } from "./cart";
 
 export type OrderForm = {
@@ -14,9 +14,15 @@ export type OrderForm = {
 const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
 const pad = (n: number) => String(n).padStart(2, "0");
 
-/** 最早可选日期：今天 + settings.leadDays 天（用客人电脑的日期） */
-export function earliestDate(from = new Date()) {
-  const d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + settings.leadDays);
+/** 这张单要提前几天订：普通盒装 leadDaysSingle 天，有套餐/礼盒就 leadDaysSet 天 */
+export function leadDaysFor(lines: CartLine[]) {
+  const hasSet = lines.some((l) => catalog[l.id]?.kind === "set");
+  return hasSet ? settings.leadDaysSet : settings.leadDaysSingle;
+}
+
+/** 最早可选日期：今天 + 提前天数（用客人电脑的日期） */
+export function earliestDate(lines: CartLine[], from = new Date()) {
+  const d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + leadDaysFor(lines));
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
@@ -40,8 +46,9 @@ export function itemsSummary(lines: CartLine[]) {
   return lines.map((l) => `${catalog[l.id].name.zh} ×${l.qty}`).join("；");
 }
 
+/** 总价（RM），用「仙」计算再换回来，不会有小数误差 */
 export function orderTotal(lines: CartLine[]) {
-  return lines.reduce((n, l) => n + l.qty * catalog[l.id].price, 0);
+  return lines.reduce((n, l) => n + l.qty * toCents(catalog[l.id].price), 0) / 100;
 }
 
 /** 发到 /api/order 的资料 */
@@ -72,7 +79,7 @@ export function buildOrderMessage(lines: CartLine[], form: OrderForm, orderId?: 
   const items = lines.map((l) => {
     const item = catalog[l.id];
     const label = item.malay ? `${item.name.zh}（${item.malay}）` : item.name.zh;
-    return `• ${label} × ${l.qty} = ${c}${item.price * l.qty}`;
+    return `• ${label} × ${l.qty} = ${c}${money(orderTotal([l]))}`;
   });
 
   return [
@@ -81,7 +88,7 @@ export function buildOrderMessage(lines: CartLine[], form: OrderForm, orderId?: 
     "",
     "【订单内容】",
     ...items,
-    `总价：${c}${total}`,
+    `总价：${c}${money(total)}`,
     "",
     "【客人资料】",
     `姓名：${form.name.trim()}`,

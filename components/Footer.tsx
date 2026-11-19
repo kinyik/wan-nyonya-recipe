@@ -5,9 +5,23 @@ import { useLang, whatsappLink } from "@/lib/i18n";
 import Image from "next/image";
 import { WhatsAppIcon } from "./Hero";
 
+/** 60122984655 → +60 12-298 4655（马来西亚手机号的常见写法） */
+function formatPhone(n: string) {
+  const m = n.match(/^60(1\d)(\d{3,4})(\d{4})$/);
+  return m ? `+60 ${m[1]}-${m[2]} ${m[3]}` : `+${n}`;
+}
+
 export default function Footer() {
   const { t, lang } = useLang();
-  const phone = `+${settings.whatsappNumber.slice(0, 2)} ${settings.whatsappNumber.slice(2)}`;
+  // 只显示已经填了链接的社交平台
+  const socials = (
+    [
+      ["Instagram", settings.socials.instagram],
+      ["Facebook", settings.socials.facebook],
+      ["TikTok", settings.socials.tiktok],
+    ] as const
+  ).filter(([, href]) => href.trim() !== "");
+  const phone = formatPhone(settings.whatsappNumber);
 
   return (
     <footer id="contact" className="bg-cocoa text-sand">
@@ -36,12 +50,18 @@ export default function Footer() {
             <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
             {phone}
           </a>
-          <h3 className="mt-5 font-serif font-bold text-gold-soft">{t.footer.followLabel}</h3>
-          <div className="mt-2 flex gap-4 text-sm">
-            <a href={settings.socials.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-paper">Instagram</a>
-            <a href={settings.socials.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-paper">Facebook</a>
-            <a href={settings.socials.tiktok} target="_blank" rel="noopener noreferrer" className="hover:text-paper">TikTok</a>
-          </div>
+          {socials.length > 0 && (
+            <>
+              <h3 className="mt-5 font-serif font-bold text-gold-soft">{t.footer.followLabel}</h3>
+              <div className="mt-2 flex gap-4 text-sm">
+                {socials.map(([label, href]) => (
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="hover:text-paper">
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
       <p className="border-t border-bark px-4 py-5 text-center text-xs text-sand/70">

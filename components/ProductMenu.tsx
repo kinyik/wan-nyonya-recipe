@@ -2,6 +2,7 @@
 
 import data from "@/data/products.json";
 import settings from "@/data/settings.json";
+import { money } from "@/lib/catalog";
 import { useLang } from "@/lib/i18n";
 import { KuihImage, SectionHeading } from "./ui";
 import AddToCart from "./AddToCart";
@@ -19,10 +20,11 @@ export default function ProductMenu() {
                 <KuihImage
                   src={p.image}
                   alt={p.name[lang]}
+                  position={"imagePosition" in p ? p.imagePosition : undefined}
                   sizes="(min-width: 1024px) 33vw, 50vw"
                   className="aspect-square"
                 />
-                {settings.demoMode && (
+                {settings.samplePhotos && p.image && (
                   <span className="absolute left-2 top-2 rounded-full bg-cocoa/70 px-2 py-0.5 text-[11px] text-paper backdrop-blur">
                     {t.menu.sample}
                   </span>
@@ -37,7 +39,7 @@ export default function ProductMenu() {
                 <div className="mt-3 flex items-baseline justify-between gap-2">
                   <span className="font-display text-2xl font-semibold text-nyonya-deep">
                     {settings.currency}
-                    {p.price}
+                    {money(p.price)}
                   </span>
                   <span className="text-xs text-bark sm:text-sm">{p.unit[lang]}</span>
                 </div>

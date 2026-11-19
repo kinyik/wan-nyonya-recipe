@@ -2,6 +2,7 @@
 
 import data from "@/data/products.json";
 import settings from "@/data/settings.json";
+import { money } from "@/lib/catalog";
 import { useLang, whatsappLink } from "@/lib/i18n";
 import { KuihImage, SectionHeading } from "./ui";
 import AddToCart from "./AddToCart";
@@ -33,7 +34,7 @@ export default function GiftSets() {
                 <div className="mt-auto flex items-end justify-between gap-3 pt-5">
                   <span className="font-display text-3xl font-semibold text-paper">
                     {settings.currency}
-                    {s.price}
+                    {money(s.price)}
                   </span>
                   <AddToCart id={s.id} label={t.sets.add} dark />
                 </div>

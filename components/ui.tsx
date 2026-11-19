@@ -53,6 +53,14 @@ export function KuihImage({
   className?: string;
   priority?: boolean;
 }) {
+  // 还没有照片：先放一张淡淡的 logo，等真实照片补上
+  if (!src) {
+    return (
+      <div className={`relative flex items-center justify-center overflow-hidden bg-blush/40 ${className}`} role={alt ? "img" : undefined} aria-label={alt || undefined}>
+        <Image src="/images/brand/logo.png" alt="" width={800} height={713} className="h-auto w-1/2 max-w-40 opacity-60" />
+      </div>
+    );
+  }
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <Image

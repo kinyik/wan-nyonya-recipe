@@ -45,8 +45,9 @@ export default function ProductMenu() {
                     {settings.currency}
                     {money(p.price)}
                   </span>
-                  <span className="text-xs text-bark sm:text-sm">{p.unit[lang]}</span>
+                  <span className="text-right text-xs text-bark sm:text-sm">{p.unit[lang]}</span>
                 </div>
+                {"note" in p && p.note && <p className="mt-1.5 text-xs leading-relaxed text-clay">{p.note[lang]}</p>}
                 <div className="mt-4">
                   <AddToCart id={p.id} label={t.menu.add} />
                 </div>

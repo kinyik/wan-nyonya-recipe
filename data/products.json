@@ -5,7 +5,7 @@
       "name": { "zh": "传统九层糕", "en": "Traditional Layered Kuih" },
       "malay": "Kuih Lapis",
       "price": 9.9,
-      "unit": { "zh": "一盒 6 片", "en": "Box of 6 pcs" },
+      "unit": { "zh": "一盒 5 片", "en": "Box of 5 pcs" },
       "image": "/images/products/kuih-lapis.jpg"
     },
     {
@@ -13,7 +13,7 @@
       "name": { "zh": "七彩九层糕", "en": "Rainbow Layered Kuih" },
       "malay": "Rainbow Kuih Lapis",
       "price": 9.9,
-      "unit": { "zh": "一盒 6 片", "en": "Box of 6 pcs" },
+      "unit": { "zh": "一盒 5 片", "en": "Box of 5 pcs" },
       "image": "/images/products/lapis-pelangi.jpg"
     },
     {
@@ -21,7 +21,7 @@
       "name": { "zh": "咖啡九层糕", "en": "Coffee Layered Kuih" },
       "malay": "Coffee Kuih Lapis",
       "price": 9.9,
-      "unit": { "zh": "一盒 6 片", "en": "Box of 6 pcs" },
+      "unit": { "zh": "一盒 5 片", "en": "Box of 5 pcs" },
       "image": ""
     },
     {
@@ -29,7 +29,7 @@
       "name": { "zh": "香兰达兰糕", "en": "Pandan Coconut Kuih" },
       "malay": "Kuih Talam",
       "price": 9.9,
-      "unit": { "zh": "一盒 6 片", "en": "Box of 6 pcs" },
+      "unit": { "zh": "一盒 5 片", "en": "Box of 5 pcs" },
       "image": "/images/products/kuih-talam.jpg"
     },
     {
@@ -37,7 +37,7 @@
       "name": { "zh": "蓝花加央糯米糕", "en": "Butterfly Pea Glutinous Rice with Kaya" },
       "malay": "Pulut Tai Tai",
       "price": 9.9,
-      "unit": { "zh": "一盒 6 片", "en": "Box of 6 pcs" },
+      "unit": { "zh": "一盒 5 片", "en": "Box of 5 pcs" },
       "image": "/images/products/pulut-tai-tai.jpg"
     },
     {
@@ -45,7 +45,7 @@
       "name": { "zh": "椰丝木薯糕", "en": "Coconut Tapioca Kuih" },
       "malay": "Kuih Tapioca with Coconut",
       "price": 9.9,
-      "unit": { "zh": "一盒 6 片", "en": "Box of 6 pcs" },
+      "unit": { "zh": "一盒 5 片", "en": "Box of 5 pcs" },
       "image": "/images/products/kuih-ubi-kayu.jpg"
     },
     {
@@ -53,7 +53,8 @@
       "name": { "zh": "混合款", "en": "Mixed Box" },
       "malay": "Mixed",
       "price": 9.9,
-      "unit": { "zh": "6 款各 1 片", "en": "1 pc of each of 6 flavours" },
+      "unit": { "zh": "随机 5 款各 1 片", "en": "5 random, 1 pc each" },
+      "note": { "zh": "要指定口味可在备注写明", "en": "Want specific flavours? Add them in the order note" },
       "image": "/images/hero/hero-photo.jpg",
       "imagePosition": "40% 50%"
     }

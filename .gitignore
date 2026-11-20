@@ -9,3 +9,4 @@ next-env.d.ts
 
 # Office 打开文件时产生的临时锁定文件
 ~$*
+exports/

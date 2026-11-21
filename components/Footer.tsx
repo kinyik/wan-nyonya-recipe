@@ -5,7 +5,7 @@ import { useLang, whatsappLink } from "@/lib/i18n";
 import Image from "next/image";
 import { WhatsAppIcon } from "./Hero";
 
-/** 60122984655 → +60 12-298 4655（马来西亚手机号的常见写法） */
+/** 60128609968 → +60 12-860 9968（马来西亚手机号的常见写法） */
 function formatPhone(n: string) {
   const m = n.match(/^60(1\d)(\d{3,4})(\d{4})$/);
   return m ? `+60 ${m[1]}-${m[2]} ${m[3]}` : `+${n}`;
